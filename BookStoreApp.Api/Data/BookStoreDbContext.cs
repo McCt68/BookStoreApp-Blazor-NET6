@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+// The DB context class is there for EntityFramework to configure the connection to the database ??
+// it typically belongs in the Data folder
+
 // This class has two constructors, one default, other initializes some options which it pass over to the DbContext
 
 // DbContext here basically says this class becomes an entity framework recognized class representing -
-// The database that we are connecting too. ( I need to understand this better )
+// The database that we are connecting too. ( I need to understand this better ) represeting the databaseConnection.
 // Maybe the explenation is simply that this Inherits from DBContext
 
 namespace BookStoreApp.Api.Data
