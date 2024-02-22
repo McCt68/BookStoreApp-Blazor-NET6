@@ -5,17 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-//using BookStoreApp.API.Data;
 using AutoMapper;
-//using BookStoreApp.API.Models.Book;
 using AutoMapper.QueryableExtensions;
 using BookStoreApp.Api.Data;
 using BookStoreApp.Api.Models.Book;
+using Microsoft.AspNetCore.Authorization;
+
+/* Because of the Required atributte the user will have to provide a valid token everytime they want to use the endpoints of this API
+ * */
 
 namespace BookStoreApp.Api.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize] // Every single action / behavior inside this controller is now subject to authorization
 	public class BooksController: ControllerBase
 	{
 		private readonly BookStoreDbContext _context;
@@ -58,6 +61,7 @@ namespace BookStoreApp.Api.Controllers
 		// PUT: api/Books/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
+		[Authorize(Roles = "Administrator")] // I can put serveral different roles if i wanted
 		public async Task<IActionResult> PutBook(int id, BookUpdateDto bookDto)
 		{
 
@@ -98,6 +102,7 @@ namespace BookStoreApp.Api.Controllers
 		// POST: api/Books
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
+		[Authorize (Roles = "Administrator")]
 		public async Task<ActionResult<BookCreateDto>> PostBook(BookCreateDto bookDto)
 		{
 			var book = mapper.Map<Book>(bookDto);
@@ -109,6 +114,7 @@ namespace BookStoreApp.Api.Controllers
 
 		// DELETE: api/Books/5
 		[HttpDelete("{id}")]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> DeleteBook(int id)
 		{
 			var book = await _context.Books.FindAsync(id);
