@@ -1,0 +1,43 @@
+﻿@page "/users/register"
+@inject IClient httpClient
+
+<h3>Register New Account</h3>
+
+<div class ="card-body">
+	<EditForm Model="RegistrationModel" OnvalidSubmit="HandleRegistration">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+		<div class="form-group">
+			<label for="email">Email Address</label>
+			<InputText class="form-control" @bind-Value="RegistrationModel.Email"/>
+			<ValidationMessage For="@(() => RegistrationModel.Email)" />
+		</div>
+		<div class="form-group">
+			<label for="email">First Name</label>
+			<InputText class="form-control" @bind-Value="RegistrationModel.FirstName" />
+			<ValidationMessage For="@(() => RegistrationModel.FirstName)" />
+		</div>
+		<div class="form-group">
+			<label for="email">Last Name</label>
+			<InputText class="form-control" @bind-Value="RegistrationModel.LastName" />
+			<ValidationMessage For="@(() => RegistrationModel.LastName)" />
+		</div>
+		<div class="form-group">
+			<label for="email">Password</label>
+			<InputText class="form-control" @bind-Value="RegistrationModel.Password" />
+			<ValidationMessage For="@(() => RegistrationModel.Password)" />
+		</div>		
+	</EditForm>
+</div>
+
+@code {
+	
+	CreateUserDto RegistrationModel = new CreateUserDto();
+
+	// If OnValidSubmit event triggers then execute this method
+	private async Task HandleRegistration()
+	{
+		RegistrationModel.Role = "User";
+	}
+
+}
